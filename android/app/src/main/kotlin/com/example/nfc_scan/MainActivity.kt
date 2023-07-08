@@ -1,4 +1,4 @@
-package com.example.nfc_scan
+package com.pos.totembear
 
 import io.flutter.embedding.android.FlutterActivity
 
