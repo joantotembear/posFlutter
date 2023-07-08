@@ -42,40 +42,51 @@ class _PSOOfflineState extends State<PSOOffline> {
           children: [
             Stack(
               children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 8,
-                      height: 13,
-                      decoration: BoxDecoration(border: Border.all(color: blueColor)),
-                    ),
-                    const SizedBox(width: 3.0),
-                    Consumer<MainBLoC>(
-                      builder: (context, value, child) {
-                        return GestureDetector(
-                          onTap: () {
-                            value.status == Status.initial
-                                ? Navigator.of(context).pop()
-                                : value.status == Status.reading || value.status == Status.confirmation
-                                    ? bloc.backToInitial()
-                                    : bloc.goConfirmation();
-                          },
-                          child: Text(
-                            value.status == Status.initial
-                                ? 'Salir'
-                                : value.status == Status.reading
-                                    ? 'Ingrese monto'
-                                    : value.status == Status.confirmation
+                Consumer<MainBLoC>(
+                  builder: (context, value, child) => GestureDetector(
+                    onTap: () {
+                      value.status == Status.initial
+                          ? Navigator.of(context).pop()
+                          : value.status == Status.reading || value.status == Status.confirmation
+                              ? bloc.backToInitial()
+                              : bloc.goConfirmation();
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.arrow_back_ios,
+                          color: blueColor,
+                          size: 14,
+                        ),
+                        Consumer<MainBLoC>(
+                          builder: (context, value, child) {
+                            return GestureDetector(
+                              onTap: () {
+                                value.status == Status.initial
+                                    ? Navigator.of(context).pop()
+                                    : value.status == Status.reading || value.status == Status.confirmation
+                                        ? bloc.backToInitial()
+                                        : bloc.goConfirmation();
+                              },
+                              child: Text(
+                                value.status == Status.initial
+                                    ? 'Salir'
+                                    : value.status == Status.reading
                                         ? 'Ingrese monto'
-                                        : value.status == Status.processing
-                                            ? 'Confirmación'
-                                            : 'Confirmación',
-                            style: const TextStyle(color: Color(0XFF007AFF), fontSize: 12, fontWeight: FontWeight.w400),
-                          ),
-                        );
-                      },
+                                        : value.status == Status.confirmation
+                                            ? 'Ingrese monto'
+                                            : value.status == Status.processing
+                                                ? 'Confirmación'
+                                                : 'Confirmación',
+                                style: const TextStyle(
+                                    color: Color(0XFF007AFF), fontSize: 13, fontWeight: FontWeight.w400),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
                 const Align(
                   alignment: Alignment.center,
